@@ -87,23 +87,21 @@ const createDB = () => {
   });
 };
 
-// service.query(`DROP DATABASE IF EXISTS ${db_name}`)
-//   .then(() => {
-//     return service.query(`CREATE DATABASE ${db_name} ENCODING = 'utf-8'`);
-//   })
-//   // .then(() => {
-//   //   return service.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"; commit;`);
-//   // })
-//   .then((res) => {
-//     return createDB();
-//   })
-//   .then(() => {
-//     service.close();
-//     sequelize.close();
-//   });
+const dbReCreate = () => {
+service.query(`DROP DATABASE IF EXISTS ${db_name}`)
+  .then(() => {
+    return service.query(`CREATE DATABASE ${db_name} ENCODING = 'utf-8'`);
+  })
+  .then(res => createDB())
+  .then(() => loadSeeds())
+  .then(() => {
+    service.close();
+    sequelize.close();
+  });
+}
+
+dbReCreate();
 
 prepareFolderTree();
-
-loadSeeds();
 
 console.log('hello');
