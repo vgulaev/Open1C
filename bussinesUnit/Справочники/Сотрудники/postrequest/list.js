@@ -5,7 +5,7 @@ exports.list = (req, res) => {
     'Content-Type': 'application/json'
   });
 
-  sequelize.query('select * from "Организации_справочник"')
+  sequelize.query('select * from "Сотрудники_справочник"')
     .then((rows) => {
       res.end(JSON.stringify(rows[0]));
     });

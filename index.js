@@ -35,8 +35,7 @@ const server = http.createServer((req, res) => {
   console.log(req.url);
   console.log(req.method);
   if ("POST" == req.method) {
-    postResponse(req, res);
-    return;
+    return postResponse(req, res);
   }
 
   if ('/' == req.url) {

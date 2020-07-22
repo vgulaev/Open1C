@@ -1,8 +1,8 @@
-const { sequelize, service } = require('./db/connection');
 const dotenv = require('dotenv');
-const { schema } = require('./db/metadata/schema');
-const rimraf = require('rimraf');
 const fs = require('fs');
+const rimraf = require('rimraf');
+const { schema } = require('./db/metadata/schema');
+const { sequelize, service } = require('./db/connection');
 
 dotenv.config();
 
