@@ -1,20 +1,49 @@
 const http = require('http');
+const fs = require('fs');
 
-var counter = 0;
 const server = http.createServer((req, res) => {
-  setTimeout(() => {
-    res.end('this is me');
-  }, 10000 - counter * 1000);
+  console.log(req.url);
+  if ('/' == req.url) {
+    let content = fs.readFileSync('templates/main.html');
+    res.writeHead(200, {
+      'Content-Type': 'text/html; charset=UTF-8'
+    });
+    res.end(content);
+    return;
+  }
+  if ('/' == req.url) {
+    let content = fs.readFileSync('templates/main.html');
+    res.writeHead(200, {
+      'Content-Type': 'text/html; charset=UTF-8'
+    });
+    res.end(content);
+    return;
+  }
 
-  counter = 10;
+  let path = decodeURIComponent(req.url);
 
-  console.log(counter);
-  // try {
-  //   // respond(req, res);
-  // } catch (err) {
-  //   // console.log(err.message, err.stack)
-  //   // empty(res, err.message + err.stack);
-  // }
+  let ar = path.split('/');
+
+  if (-1 != ['Справочники', 'Документы'].indexOf(ar[1])) {
+    let viewPath = ['bussinesUnit', ar[1], ar[2]];
+    if ('list' == ar[3]) {
+      viewPath.push('view');
+      viewPath.push('list.html');
+    }
+    let content = fs.readFileSync(viewPath.join('/'));
+
+    res.writeHead(200, {
+      'Content-Type': 'text/html; charset=UTF-8'
+    });
+    res.end(content);
+
+    return;
+  }
+
+  res.writeHead(200, {
+    'Content-Type': 'text/html; charset=UTF-8'
+  });
+  res.end(`${decodeURIComponent(req.url)} should be inproved`);
 });
 
 let port = 3080;
