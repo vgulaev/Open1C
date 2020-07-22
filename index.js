@@ -3,6 +3,8 @@ const fs = require('fs');
 
 const server = http.createServer((req, res) => {
   console.log(req.url);
+  console.log(req.method);
+
   if ('/' == req.url) {
     let content = fs.readFileSync('templates/main.html');
     res.writeHead(200, {

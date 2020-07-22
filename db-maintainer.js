@@ -24,6 +24,7 @@ const prepareFolderTree = () => {
     fs.mkdirSync(name);
     fs.mkdirSync(`${name}/model`);
     fs.mkdirSync(`${name}/view`);
+    fs.mkdirSync(`${name}/postrequest`);
   });
 }
 
