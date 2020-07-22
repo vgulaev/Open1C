@@ -28,12 +28,28 @@ const postResponse = (req, res) => {
   ar.forEach((e) => {
     callBack = callBack[e];
   });
-  callBack(req, res);
+
+  let body = '';
+
+  req.on('data', function (data) {
+    body += data;
+    if (body.length > 1e6)
+        req.connection.destroy();
+  });
+
+  req.on('end', function () {
+    callBack(req, res, body);
+  });
+}
+
+const simple = (res, msg) => {
+  res.writeHead(200, {
+    'Content-Type': 'text/html; charset=UTF-8'
+  });
+  res.end(msg);
 }
 
 const server = http.createServer((req, res) => {
-  console.log(req.url);
-  console.log(req.method);
   if ("POST" == req.method) {
     return postResponse(req, res);
   }
@@ -61,16 +77,21 @@ const server = http.createServer((req, res) => {
 
   if (-1 != ['Справочники', 'Документы'].indexOf(ar[1])) {
     let viewPath = ['bussinesUnit', ar[1], ar[2]];
-    if ('list' == ar[3]) {
+    // if ('list' == ar[3]) {
       viewPath.push('view');
-      viewPath.push('list.html');
-    }
-    let content = fs.readFileSync(viewPath.join('/'));
+      viewPath.push(ar[3] + '.html');
+    // }
 
-    res.writeHead(200, {
-      'Content-Type': 'text/html; charset=UTF-8'
-    });
-    res.end(content);
+    if (fs.existsSync(viewPath.join('/'))) {
+      let content = fs.readFileSync(viewPath.join('/'));
+
+      res.writeHead(200, {
+        'Content-Type': 'text/html; charset=UTF-8'
+      });
+      res.end(content);
+    } else {
+      return simple(res, `${viewPath.join('/')} does\'n exist`);
+    }
 
     return;
   } else if ('js' == ar[1]) {

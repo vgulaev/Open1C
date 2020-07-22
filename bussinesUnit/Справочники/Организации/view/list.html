@@ -4,19 +4,32 @@
   <title></title>
 </head>
 <script type="text/javascript" src="/js/dinamicList.js"></script>
+<script type="text/javascript" src="/js/Организации_list.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<style type="text/css">
+  .dynamicListRow:hover {
+    background: gold;
+  }
+</style>
 <body>
-Я Организации
-<table class="open1C_dynamic_list">
+<a href="/">Главная</a>
+<div>
+  <input id="q" autocomplete="off">
+  <a href="/Справочники/Организации/item">Добавить</a>
+</div>
+<table class="open1CDynamicList" src="/Справочники/Организации/list">
   <thead>
     <tr>
       <td>Код</td>
       <td>Наименование</td>
+      <td>ИНН</td>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>element.Код</td>
-      <td>element.Наименование</td>
+    <tr class="dynamicListRow">
+      <td>{{element.Код}}<span id="id" style="display: none;">{{element.id}}</span></td>
+      <td>{{element.Наименование}}</td>
+      <td>{{element.ИНН}}</td>
     </tr>
   </tbody>
 </table>
