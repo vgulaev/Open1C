@@ -23,6 +23,14 @@ class dinamicList {
     this.keys = Object.keys(this.params);
   }
 
+  addEventListener() {
+    document.querySelectorAll('.dynamicListRow').forEach(e => {
+      e.addEventListener('click', event => {
+        window.location.href = `/Справочники/Организации/item?id=${e.querySelector('#id').innerHTML}`;
+      });
+    });
+  }
+
   render() {
     let innerHTML = '';
     this.data.forEach((e) => {
@@ -32,6 +40,7 @@ class dinamicList {
       innerHTML += this.pieces.join('');
     });
     this.body.innerHTML = innerHTML;
+    this.addEventListener();
   }
 
   request(q) {
@@ -45,6 +54,6 @@ class dinamicList {
     }
 
     req.open("post", this.postUrl, true);
-    req.send(JSON.stringify({q: q}));
+    req.send(JSON.stringify(q));
   }
 }

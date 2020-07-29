@@ -71,16 +71,18 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  let path = decodeURIComponent(req.url);
+  let [path, params] = decodeURIComponent(req.url).split('?');
+
+  if (undefined != params) {
+    params = new URLSearchParams(params);
+  }
 
   let ar = path.split('/');
 
   if (-1 != ['Справочники', 'Документы'].indexOf(ar[1])) {
     let viewPath = ['bussinesUnit', ar[1], ar[2]];
-    // if ('list' == ar[3]) {
-      viewPath.push('view');
-      viewPath.push(ar[3] + '.html');
-    // }
+    viewPath.push('view');
+    viewPath.push(ar[3] + '.html');
 
     if (fs.existsSync(viewPath.join('/'))) {
       let content = fs.readFileSync(viewPath.join('/'));

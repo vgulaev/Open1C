@@ -3,12 +3,19 @@
 <head>
   <title></title>
 </head>
+<script type="text/javascript" src="/js/Организации_item.js"></script>
 <body>
   <a href="/Справочники/Организации/list">В список</a>
+<div>
+  <span id="id" style="display: inline;" binding="id"></span>
+</div>
 <div>
   <span>Код:</span><input binding="Код">
   <span>Наименование:</span><input binding="Наименование">
   <span>ИНН:</span><input binding="ИНН">
+</div>
+<div>
+  <button onclick="App.createOrUpdate();">Сохранить</button>
 </div>
 </body>
 </html>

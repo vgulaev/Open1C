@@ -6,6 +6,10 @@ window.addEventListener('load', async function( event ) {
   });
   App.q = document.querySelector('#q');
   App.q.addEventListener('keyup', event => {
-    App.list.request(App.q.value);
+    let q = {};
+    if (App.q.value.length > 0) {
+      q.q = App.q.value;
+    }
+    App.list.request(q);
   });
 })

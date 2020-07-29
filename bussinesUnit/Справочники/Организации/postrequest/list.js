@@ -6,9 +6,11 @@ exports.list = (req, res, body) => {
   });
   let sql = 'select * from "Организации_справочник"';
   if ('' != body) {
-    let q = JSON.parse(body).q;
-    if (q.length > 0) {
-      sql += ` where "Наименование" like '%${q}%'`
+    let q = JSON.parse(body);
+    if (undefined != q.q) {
+      sql += ` where "Наименование" like '%${q.q}%'`;
+    } else if (undefined != q.id) {
+      sql += ` where id = '${q.id}'`;
     }
   }
   sequelize.query(sql)
